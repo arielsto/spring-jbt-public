@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Hello</title>
+</head>
+<body>
+
+    <h1>Welcome to Schoool</h1>
+    <input id="school-id" type="number" placeholder="enter id" />
+    <br />
+    <button onclick="getSchool()">get</button>
+    <div id="response"></div>
+
+    <script>
+        function getSchool() {
+            const id = document.getElementById("school-id").value;
+            console.log(id)
+
+            const xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function () {
+                if (this.status === 200){
+                    console.log(this.response);
+                    document.getElementById("response").innerHTML = this.response;
+                } else {
+                    let error = JSON.parse(this.response);
+                    console.log(error);
+                    document.getElementById("response").innerHTML = error.message;
+                }
+            }
+
+            xhttp.open("GET", "http://localhost:8080/api/school/" + id);
+            xhttp.send();
+        }
+    </script>
+
+</body>
+</html>
